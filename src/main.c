@@ -33,14 +33,6 @@ char **parse_input(char *input) {
     return args;
 }
 
-int change_directory(const char *path) {
-    if (path == NULL || chdir(path) != 0) {
-        perror("cd error");
-        return -1; // Indicate failure
-    }
-    return 0; // Indicate success
-}
-
 void execute_command(char **args) {
     if (args[0] == NULL) {
         return;
@@ -54,7 +46,7 @@ void execute_command(char **args) {
             // Error handling is done inside change_directory
         }
     } else if (strcmp(args[0], "env") == 0) {
-        print_environment();  // Ensure you have this function defined elsewhere
+        print_environment();
     } else {
         pid_t pid = fork();
         if (pid == 0) {

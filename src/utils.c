@@ -1,10 +1,19 @@
+#include "shell.h"
 #include <string.h>
 #include <stdlib.h>
 
 char *extract_directory_from_command(char *command) {
+    if (strcmp(command, "cd") == 0) {
+        return getenv("HOME");
+    }
+
     char *token = strtok(command, " ");
     token = strtok(NULL, " ");
-    return (token);
+    if (token) {
+        return strdup(token);
+    }
+
+    return NULL;
 }
 
 void free_array(char **arr) {
