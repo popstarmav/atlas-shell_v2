@@ -42,9 +42,7 @@ void execute_command(char **args) {
         free(args);
         exit(0);
     } else if (strcmp(args[0], "cd") == 0) {
-        if (change_directory(args[1]) != 0) {
-            // Error handling is done inside change_directory
-        }
+        if (change_directory(args[1]) != 0) {}
     } else if (strcmp(args[0], "env") == 0) {
         print_environment();
     } else {

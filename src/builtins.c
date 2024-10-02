@@ -9,17 +9,13 @@ void exit_shell() {
 }
 
 int change_directory(char *command) {
-    char *directory = extract_directory_from_command(command);
-
-    if (directory == NULL) {
+    if (command == NULL) {
         fprintf(stderr, "cd error: No directory specified\n");
-        return -1; // Return -1 to indicate failure
+        return -1;
     }
 
-    if (chdir(directory) != 0) {
+    if (chdir(command) != 0) {
         perror("cd error");
-        free(directory);
-        return -1; // Return -1 to indicate failure
     } else {
         char cwd[1024];
         if (getcwd(cwd, sizeof(cwd)) != NULL) {
@@ -29,9 +25,9 @@ int change_directory(char *command) {
         }
     }
 
-    free(directory);
-    return 0; // Return 0 to indicate success
+    return 0;
 }
+
 
 void print_environment() {
     extern char **environ;
