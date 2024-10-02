@@ -42,7 +42,12 @@ void execute_command(char **args) {
         free(args);
         exit(0);
     } else if (strcmp(args[0], "cd") == 0) {
-        if (change_directory(args[1]) != 0) {}
+        if (args[1] == NULL || strcmp(args[1], "~") == 0) {
+            args[1] = getenv("HOME");
+        }
+        if (change_directory(args[1]) != 0) {
+            fprintf(stderr, "shell: No such file or directory\n");
+        }
     } else if (strcmp(args[0], "env") == 0) {
         print_environment();
     } else {
@@ -59,6 +64,7 @@ void execute_command(char **args) {
         }
     }
 }
+
 
 int main() {
     char *input;

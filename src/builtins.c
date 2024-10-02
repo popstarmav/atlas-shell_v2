@@ -9,7 +9,7 @@ void exit_shell() {
 }
 
 int change_directory(char *command) {
-    if (command == NULL) {
+    if (command == NULL || strcmp(command, "") == 0) {
         fprintf(stderr, "cd error: No directory specified\n");
         return -1;
     }
