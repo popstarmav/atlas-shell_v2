@@ -8,20 +8,20 @@ void exit_shell() {
 }
 
 int change_directory(char *command) {
+    char *home_dir;
+
     if (command == NULL || compare_strings(command, "") == 0) {
-        fprintf(stderr, "cd error: No directory specified\n");
-        return -1;
+        home_dir = getenv("HOME");
+        if (home_dir == NULL) {
+            fprintf(stderr, "cd error: HOME environment variable not set\n");
+            return -1;
+        }
+        command = home_dir;
     }
 
     if (chdir(command) != 0) {
         perror("cd error");
-    } else {
-        char cwd[1024];
-        if (getcwd(cwd, sizeof(cwd)) != NULL) {
-            printf("Changed directory to: %s\n", cwd);
-        } else {
-            perror("getcwd error");
-        }
+        return -1;
     }
 
     return 0;
