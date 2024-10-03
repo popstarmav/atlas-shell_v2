@@ -14,7 +14,18 @@ void display_prompt() {
 char *read_input() {
     char *input = NULL;
     size_t len = 0;
-    getline(&input, &len, stdin);
+    ssize_t nread = getline(&input, &len, stdin);
+
+    if (nread == -1) {
+        free(input);
+        return NULL; // Stop loop if end of input
+    }
+
+    // Remove the newline character if present
+    if (input[nread - 1] == '\n') {
+        input[nread - 1] = '\0';
+    }
+
     return input;
 }
 
@@ -42,12 +53,7 @@ void execute_command(char **args) {
         free(args);
         exit(0);
     } else if (strcmp(args[0], "cd") == 0) {
-        if (args[1] == NULL || strcmp(args[1], "~") == 0) {
-            args[1] = getenv("HOME");
-        }
-        if (change_directory(args[1]) != 0) {
-            fprintf(stderr, "shell: No such file or directory\n");
-        }
+        if (change_directory(args[1]) != 0) {}
     } else if (strcmp(args[0], "env") == 0) {
         print_environment();
     } else {
@@ -65,7 +71,6 @@ void execute_command(char **args) {
     }
 }
 
-
 int main() {
     char *input;
     char **args;
@@ -73,6 +78,9 @@ int main() {
     while (1) {
         display_prompt();
         input = read_input();
+        if (input == NULL) { // Stop the shell if no input
+            break;
+        }
         args = parse_input(input);
         execute_command(args);
         free(input);
