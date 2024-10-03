@@ -18,10 +18,9 @@ char *read_input() {
 
     if (nread == -1) {
         free(input);
-        return NULL; // Stop loop if end of input
+        return NULL;
     }
 
-    // Remove the newline character if present
     if (input[nread - 1] == '\n') {
         input[nread - 1] = '\0';
     }
@@ -49,12 +48,12 @@ void execute_command(char **args) {
         return;
     }
 
-    if (strcmp(args[0], "exit") == 0) {
+    if (compare_strings(args[0], "exit") == 0) {
         free(args);
         exit(0);
-    } else if (strcmp(args[0], "cd") == 0) {
+    } else if (compare_strings(args[0], "cd") == 0) {
         if (change_directory(args[1]) != 0) {}
-    } else if (strcmp(args[0], "env") == 0) {
+    } else if (compare_strings(args[0], "env") == 0) {
         print_environment();
     } else {
         pid_t pid = fork();
@@ -78,7 +77,7 @@ int main() {
     while (1) {
         display_prompt();
         input = read_input();
-        if (input == NULL) { // Stop the shell if no input
+        if (input == NULL) {
             break;
         }
         args = parse_input(input);

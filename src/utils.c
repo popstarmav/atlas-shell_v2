@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-int custom_strcmp(const char *s1, const char *s2) {
-    while (*s1 && *s2 && *s1 == *s2) {
+int compare_strings(const char *s1, const char *s2) {
+    while (*s1 && (*s1 == *s2)) {
         s1++;
         s2++;
     }
@@ -11,14 +11,16 @@ int custom_strcmp(const char *s1, const char *s2) {
 }
 
 char *extract_directory_from_command(char *command) {
-    if (custom_strcmp(command, "cd") == 0) {
+    if (compare_strings(command, "cd") == 0) {
         return getenv("HOME");
     }
+
     char *token = strtok(command, " ");
     token = strtok(NULL, " ");
     if (token) {
         return strdup(token);
     }
+
     return NULL;
 }
 

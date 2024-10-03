@@ -8,10 +8,11 @@ void exit_shell() {
 }
 
 int change_directory(char *command) {
-    if (command == NULL || custom_strcmp(command, "") == 0) {
+    if (command == NULL || compare_strings(command, "") == 0) {
         fprintf(stderr, "cd error: No directory specified\n");
         return -1;
     }
+
     if (chdir(command) != 0) {
         perror("cd error");
     } else {
@@ -22,6 +23,7 @@ int change_directory(char *command) {
             perror("getcwd error");
         }
     }
+
     return 0;
 }
 

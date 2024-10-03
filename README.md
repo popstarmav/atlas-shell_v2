@@ -24,5 +24,5 @@ To compile and run the Atlas Shell, you need:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/atlas-shell_v2.git
+   git clone https://github.com/popstarmav/atlas-shell_v2.git
 
