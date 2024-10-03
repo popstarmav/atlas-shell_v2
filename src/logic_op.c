@@ -4,11 +4,12 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include "shell.h"
 
 void handle_logical_operators(char **args) {
     int status;
     for (int i = 0; args[i] != NULL; i++) {
-        if (strcmp(args[i], "&&") == 0) {
+        if (custom_strcmp(args[i], "&&") == 0) {
             args[i] = NULL;
             pid_t pid = fork();
             if (pid == 0) {
@@ -25,7 +26,7 @@ void handle_logical_operators(char **args) {
                 perror("execvp failed");
             }
             break;
-        } else if (strcmp(args[i], "||") == 0) {
+        } else if (custom_strcmp(args[i], "||") == 0) {
             args[i] = NULL;
             pid_t pid = fork();
             if (pid == 0) {

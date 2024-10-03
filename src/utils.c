@@ -2,17 +2,23 @@
 #include <string.h>
 #include <stdlib.h>
 
+int custom_strcmp(const char *s1, const char *s2) {
+    while (*s1 && *s2 && *s1 == *s2) {
+        s1++;
+        s2++;
+    }
+    return *(unsigned char *)s1 - *(unsigned char *)s2;
+}
+
 char *extract_directory_from_command(char *command) {
-    if (strcmp(command, "cd") == 0) {
+    if (custom_strcmp(command, "cd") == 0) {
         return getenv("HOME");
     }
-
     char *token = strtok(command, " ");
     token = strtok(NULL, " ");
     if (token) {
         return strdup(token);
     }
-
     return NULL;
 }
 

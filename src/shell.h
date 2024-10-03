@@ -12,6 +12,8 @@
 #define MAX_COMMAND_LENGTH 1024
 
 /* Function prototypes */
+int custom_strcmp(const char *s1, const char *s2);
+int custom_strcmp(const char *str1, const char *str2);
 
 /* main.c */
 void display_prompt(void);
